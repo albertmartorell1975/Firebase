@@ -15,6 +15,7 @@
 package com.google.android.datatransport.runtime;
 
 import android.annotation.SuppressLint;
+import android.database.SQLException;
 import androidx.annotation.Discouraged;
 import androidx.annotation.WorkerThread;
 import com.google.android.datatransport.Priority;
@@ -33,7 +34,11 @@ public final class ForcedSender {
     if (transport instanceof TransportImpl) {
       TransportContext context =
           ((TransportImpl<?>) transport).getTransportContext().withPriority(priority);
-      TransportRuntime.getInstance().getUploader().logAndUpdateState(context, 1);
+      try {
+        TransportRuntime.getInstance().getUploader().logAndUpdateState(context, 1);
+      } catch (SQLException ex) {
+        Logging.w(LOG_TAG, "Send failed. Will retry on schedule.", ex);
+      }
     } else {
       Logging.w(LOG_TAG, "Expected instance of `TransportImpl`, got `%s`.", transport);
     }
