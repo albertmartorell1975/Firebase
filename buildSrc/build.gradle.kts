@@ -48,7 +48,7 @@ dependencies {
     implementation("com.google.auto.value:auto-value-annotations:1.8.1")
     annotationProcessor("com.google.auto.value:auto-value:1.6.5")
     implementation(kotlin("gradle-plugin", "1.7.10"))
-    implementation("org.json:json:20210307")
+    implementation("org.json:json:20220924")
 
     implementation("org.eclipse.aether:aether-api:1.0.0.v20140518")
     implementation("org.eclipse.aether:aether-util:1.0.0.v20140518")
